@@ -17,7 +17,7 @@ public class ChatbotController {
         log.info("{}", data.getQueryResult().getParameters());
         var genre = (String)data.getQueryResult().getParameters().get("Genre");
         if (genre == null || genre.isEmpty()){
-            webHoRes.setFullfilmentText("Quel genre de film ?");
+            webHoRes.setFullfilmentText("Quel genre de film ? ");
         }
         else{
             webHoRes.setFullfilmentText("Vous voulez voir un film de " + genre + ". Bien.");
