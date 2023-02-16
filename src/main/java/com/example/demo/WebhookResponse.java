@@ -14,12 +14,21 @@ public class WebhookResponse {
     @Data
     public static class FulfillmentMessage{
         private String platform;
-        private List<Suggestion> Suggestions;
+        private Suggestions Suggestions;
+
+        @Data
+        public static class Suggestions{
+            private List<Suggestion> suggestions;
+        }
         @Data
         public static class Suggestion{
             private String title;
         }
-        private List<SimpleResponse> SimpleResponses;
+        private SimpleResponses SimpleResponses;
+        @Data
+        public static class SimpleResponses{
+            private List<SimpleResponse> simpleResponses;
+        }
         @Data
         public static class SimpleResponse{
             private String textToSpeech;
