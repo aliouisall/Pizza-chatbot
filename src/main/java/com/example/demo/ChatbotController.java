@@ -21,24 +21,29 @@ public class ChatbotController {
         if (genre == null || genre.isEmpty()){
             webHoRes.setFullfilmentText("Quel genre de film ?");
         }
-        else{
+        else {
             webHoRes.setFullfilmentText("Vous voulez voir un film de " + genre + ". Bien.");
         }
         webHoRes.setFulfillmentMessages(List.of(
                 new WebhookResponse.FulfillmentMessage()
                         .setPlatform("ACTIONS_ON_GOOGLE")
-                        .setSuggestions(new WebhookResponse.FulfillmentMessage.Suggestions().setSuggestions(List.of(
-                                new WebhookResponse.FulfillmentMessage.Suggestion().setTitle("Action")
-                        )))
+                        .setSuggestions(new WebhookResponse.FulfillmentMessage.Suggestions()
+                                .setSuggestions(List.of(
+                                        new WebhookResponse.FulfillmentMessage.Suggestion().setTitle("Action"),
+                                        new WebhookResponse.FulfillmentMessage.Suggestion().setTitle("Aventure"),
+                                        new WebhookResponse.FulfillmentMessage.Suggestion().setTitle("Comédie")
+                                ))
+                        ),
+                new WebhookResponse.FulfillmentMessage()
+                        .setPlatform("ACTIONS_ON_GOOGLE")
                         .setSimpleResponses(new WebhookResponse.FulfillmentMessage.SimpleResponses().setSimpleResponses(List.of(
                                 new WebhookResponse.FulfillmentMessage.SimpleResponse().setTextToSpeech("Test")
                         )))
                 )
         );
+        log.info("{}", data.getQueryResult().getAction());
         return webHoRes;
     }
 }
 
-// class ffmes
-// class sugg contient list de suggestion ayant title comme propriété; même chose pour simple response
-// objet simplePerson qui englobe une liste
+// match intent basé sur action and parameters
