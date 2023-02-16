@@ -33,13 +33,19 @@ public class ChatbotController {
                             new WebhookResponse.FulfillmentMessage()
                                     .setPlatform("ACTIONS_ON_GOOGLE")
                                     .setSimpleResponses(new WebhookResponse.FulfillmentMessage.SimpleResponses().setSimpleResponses(List.of(
-                                            new WebhookResponse.FulfillmentMessage.SimpleResponse().setTextToSpeech("Je n'ai pas bien compris.")
+                                            new WebhookResponse.FulfillmentMessage.SimpleResponse().setTextToSpeech("Test")
                                     )))
                     )
             );
         }
         else {
-            webHoRes.setFullfilmentText("Vous voulez voir un film de " + genre + ". Bien.");
+            webHoRes.setFulfillmentMessages(List.of(
+                    new WebhookResponse.FulfillmentMessage()
+                            .setPlatform("ACTIONS_ON_GOOGLE")
+                            .setSimpleResponses(new WebhookResponse.FulfillmentMessage.SimpleResponses().setSimpleResponses(List.of(
+                                    new WebhookResponse.FulfillmentMessage.SimpleResponse().setTextToSpeech("Simple response")
+                            )))
+            ));
         }
         log.info("{}", data.getQueryResult().getAction());
         return webHoRes;
