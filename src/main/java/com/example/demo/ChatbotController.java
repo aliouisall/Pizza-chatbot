@@ -42,23 +42,23 @@ public class ChatbotController {
             webHoRes.setFulfillmentMessages(List.of(
                     new WebhookResponse.FulfillmentMessage()
                             .setPlatform("ACTIONS_ON_GOOGLE")
+                            .setSimpleResponses(new WebhookResponse.FulfillmentMessage.SimpleResponses().setSimpleResponses(List.of(
+                                    new WebhookResponse.FulfillmentMessage.SimpleResponse().setTextToSpeech("Bien voici ce que je te propose :")
+                    ))),
+                    new WebhookResponse.FulfillmentMessage()
+                            .setPlatform("ACTIONS_ON_GOOGLE")
                             .setCarouselSelect(new WebhookResponse.FulfillmentMessage.CarouselSelect().setItems(List.of(
                                     new WebhookResponse.FulfillmentMessage.Item()
-                                            .setTitle("TTTTT")
-                                            .setDescription("DDDDD")
-                                            .setInfo(new WebhookResponse.FulfillmentMessage.Info().setKey("KKKKK"))
+                                            .setTitle("Title1")
+                                            .setDescription("Des1")
+                                            .setInfo(new WebhookResponse.FulfillmentMessage.Info().setKey("ABCD"))
                                             .setImage(new WebhookResponse.FulfillmentMessage.Image().setImageUri("https://image.over-blog.com/Rm53RG4zyBFNdT1-bdZgZoGOYrg=/filters:no_upscale()/image%2F0953084%2F20221026%2Fob_88ffa7_5229-638022957267263454.jpg")),
                                     new WebhookResponse.FulfillmentMessage.Item()
                                             .setTitle("TTTTT")
                                             .setDescription("DDDDD")
-                                            .setInfo(new WebhookResponse.FulfillmentMessage.Info().setKey("KKKKK"))
+                                            .setInfo(new WebhookResponse.FulfillmentMessage.Info().setKey("RTY"))
                                             .setImage(new WebhookResponse.FulfillmentMessage.Image().setImageUri("https://i.skyrock.net/4411/47464411/pics/3154505458_1_2_vZZvb2HL.jpg"))
-                            ))),
-                    new WebhookResponse.FulfillmentMessage()
-                            .setPlatform("ACTIONS_ON_GOOGLE")
-                            .setSimpleResponses(new WebhookResponse.FulfillmentMessage.SimpleResponses().setSimpleResponses(List.of(
-                                    new WebhookResponse.FulfillmentMessage.SimpleResponse().setTextToSpeech("Bien voici ce que je te propose :")
-                            )))
+                    )))
             ));
         }
         log.info("{}", data.getQueryResult().getAction());
