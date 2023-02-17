@@ -17,6 +17,7 @@ public class WebhookResponse {
         private Suggestions Suggestions;
         private SimpleResponses SimpleResponses;
         private CarouselSelect CarouselSelect;
+        private Card Card;
 
         @Data
         public static class Suggestions{
@@ -53,6 +54,17 @@ public class WebhookResponse {
         @Data
         public static class Image{
             private String imageUri;
+        }
+        @Data
+        public static class Card{
+            private String title;
+            private String imageURI;
+            private List<Button> Buttons;
+        }
+        @Data
+        public static class Button{
+            private String text;
+            private String postback;
         }
     }
 }
