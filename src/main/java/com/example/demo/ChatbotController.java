@@ -33,7 +33,7 @@ public class ChatbotController {
                             new WebhookResponse.FulfillmentMessage()
                                     .setPlatform("ACTIONS_ON_GOOGLE")
                                     .setSimpleResponses(new WebhookResponse.FulfillmentMessage.SimpleResponses().setSimpleResponses(List.of(
-                                            new WebhookResponse.FulfillmentMessage.SimpleResponse().setTextToSpeech("Test")
+                                            new WebhookResponse.FulfillmentMessage.SimpleResponse().setTextToSpeech("Quel genre de film ?")
                                     )))
                     )
             );
@@ -42,9 +42,6 @@ public class ChatbotController {
             webHoRes.setFulfillmentMessages(List.of(
                     new WebhookResponse.FulfillmentMessage()
                             .setPlatform("ACTIONS_ON_GOOGLE")
-                            .setSimpleResponses(new WebhookResponse.FulfillmentMessage.SimpleResponses().setSimpleResponses(List.of(
-                                    new WebhookResponse.FulfillmentMessage.SimpleResponse().setTextToSpeech("Bien, voici ce que je te propose :")
-                            )))
                             .setCarouselSelect(new WebhookResponse.FulfillmentMessage.CarouselSelect().setItems(List.of(
                                     new WebhookResponse.FulfillmentMessage.Item()
                                             .setTitle("TTTTT")
@@ -56,6 +53,11 @@ public class ChatbotController {
                                             .setDescription("DDDDD")
                                             .setInfo(new WebhookResponse.FulfillmentMessage.Info().setKey("KKKKK"))
                                             .setImage(new WebhookResponse.FulfillmentMessage.Image().setImageUri("https://i.skyrock.net/4411/47464411/pics/3154505458_1_2_vZZvb2HL.jpg"))
+                            ))),
+                    new WebhookResponse.FulfillmentMessage()
+                            .setPlatform("ACTIONS_ON_GOOGLE")
+                            .setSimpleResponses(new WebhookResponse.FulfillmentMessage.SimpleResponses().setSimpleResponses(List.of(
+                                    new WebhookResponse.FulfillmentMessage.SimpleResponse().setTextToSpeech("Bien voici ce que je te propose :")
                             )))
             ));
         }
