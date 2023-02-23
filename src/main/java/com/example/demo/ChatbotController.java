@@ -70,7 +70,7 @@ public class ChatbotController {
             for(String movie:movies.get(genre)){
                 MovieDBResponse genreSelectedResponse = restTemplate.getForObject(tmdbResourceUrl + "&query=" + movie + "&language=fr", MovieDBResponse.class);
                 WebhookResponse.FulfillmentMessage.Item item = new WebhookResponse.FulfillmentMessage.Item()
-                        .setTitle(genreSelectedResponse.getResults().get(0).getTitle())
+                        .setTitle(genreSelectedResponse.getResults().get(0).getTitle() + "33")
                         .setDescription(genreSelectedResponse.getResults().get(0).getOverview())
                         .setInfo(new WebhookResponse.FulfillmentMessage.Info().setKey(genreSelectedResponse.getResults().get(0).getId().toString()))
                         .setImage(new WebhookResponse.FulfillmentMessage.Image().setImageUri("https://image.tmdb.org/t/p/w500" + genreSelectedResponse.getResults().get(0).getPosterPath()));
