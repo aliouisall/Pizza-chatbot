@@ -17,7 +17,7 @@ public class WebhookResponse {
         private Suggestions Suggestions;
         private SimpleResponses SimpleResponses;
         private CarouselSelect CarouselSelect;
-        private Card Card;
+        private BasicCard BasicCard;
 
         @Data
         public static class Suggestions{
@@ -56,17 +56,20 @@ public class WebhookResponse {
             private String imageUri;
         }
         @Data
-        public static class Card{
+        public static class BasicCard{
             private String title;
+            private String formattedText;
             private String imageURI;
             private List<Button> Buttons;
         }
         @Data
         public static class Button{
-            private String text;
-            private String postback;
+            private String title;
+            private OpenUriAction openUriAction;
+        }
+        @Data
+        public static class OpenUriAction{
+            private String uri;
         }
     }
 }
-
-// Ajout des variables image et info dans la classe Item

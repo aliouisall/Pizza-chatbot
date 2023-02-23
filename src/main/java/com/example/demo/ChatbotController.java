@@ -1,6 +1,5 @@
 package com.example.demo;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -27,8 +26,25 @@ public class ChatbotController {
         WebhookResponse webHoRes = new WebhookResponse();
         log.info("{}", webHoRes);
         log.info("{}", data.getQueryResult().getParameters());
+        log.info("{}", data.getQueryResult().getOutputContexts());
+        String outputContext;
+        Integer option = 0;
         var genre = (String)data.getQueryResult().getParameters().get("Genre");
-        if (genre == null || genre.isEmpty()){
+        if (data.getQueryResult().getAction().equals("movieSLAction")){
+            for (int i=0; i<data.getQueryResult().getOutputContexts().size(); i++){
+                if (data.getQueryResult().getOutputContexts().get(i).getName().endsWith("actions_intent_option"))
+                    option = (Integer)data.getQueryResult().getOutputContexts().get(i).getParameters().get("OPTION");
+            }
+            log.info("{}", option);
+            Movie movieSelectedResponse = restTemplate.getForObject("https://api.themoviedb.org/3/movie/" + option +"?api_key=7996ca1b1e575167242fa0d3ea6f5ef1", Movie.class);
+            webHoRes.setFulfillmentMessages(List.of(
+                    new WebhookResponse.FulfillmentMessage()
+                            .setBasicCard(new WebhookResponse.FulfillmentMessage.BasicCard()
+                                    .setImageURI("https://image.tmdb.org/t/p/w500" + movieSelectedResponse.getPosterPath())
+                                    .setButtons(List.of(new WebhookResponse.FulfillmentMessage.Button().setOpenUriAction(new WebhookResponse.FulfillmentMessage.OpenUriAction().setUri("UriAction")))))
+            ));
+        }
+        else if (genre == null || genre.isEmpty()){
             webHoRes.setFullfilmentText("Quel genre de film ?");
             webHoRes.setFulfillmentMessages(List.of(
                             new WebhookResponse.FulfillmentMessage()
@@ -49,7 +65,6 @@ public class ChatbotController {
             );
         }
         else {
-            log.info("{}", movies.get(genre));
             List<WebhookResponse.FulfillmentMessage.Item> items = new ArrayList<>();
             for(String movie:movies.get(genre)){
                 MovieDBResponse genreSelectedResponse = restTemplate.getForObject(tmdbResourceUrl + "&query=" + movie + "&language=fr", MovieDBResponse.class);
@@ -68,11 +83,13 @@ public class ChatbotController {
                     ))),
                     new WebhookResponse.FulfillmentMessage()
                             .setPlatform("ACTIONS_ON_GOOGLE")
-                            .setCarouselSelect(new WebhookResponse.FulfillmentMessage.CarouselSelect().setItems(items
-                    ))
+                            .setCarouselSelect(new WebhookResponse.FulfillmentMessage.CarouselSelect().setItems(items))
+                            //.setBasicCard(new WebhookResponse.FulfillmentMessage.BasicCard().setButtons(List.of(new WebhookResponse.FulfillmentMessage.Button().setOpenUriAction(new WebhookResponse.FulfillmentMessage.OpenUriAction().setUri("UriAction")))))
             ));
         }
-        log.info("{}", data.getQueryResult().getAction());
         return webHoRes;
     }
 }
+
+// boucler sur les outputcontext et vérifier si name se termine par actions intent option
+// dans le cas où c'est vrai récupérer la valeur du champ option
