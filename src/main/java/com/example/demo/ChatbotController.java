@@ -45,6 +45,26 @@ public class ChatbotController {
                             )
             ));
         }
+        else if (data.getQueryResult().getAction().equals("Conseil.Conseil-fallback")) {
+            webHoRes.setFullfilmentText("Je n'ai pas bien compris, quel genre ?");
+            webHoRes.setFulfillmentMessages(List.of(
+                            new WebhookResponse.FulfillmentMessage()
+                                    .setPlatform("ACTIONS_ON_GOOGLE")
+                                    .setSuggestions(new WebhookResponse.FulfillmentMessage.Suggestions()
+                                            .setSuggestions(List.of(
+                                                    new WebhookResponse.FulfillmentMessage.Suggestion().setTitle("Action"),
+                                                    new WebhookResponse.FulfillmentMessage.Suggestion().setTitle("Aventure"),
+                                                    new WebhookResponse.FulfillmentMessage.Suggestion().setTitle("Comédie")
+                                            ))
+                                    ),
+                            new WebhookResponse.FulfillmentMessage()
+                                    .setPlatform("ACTIONS_ON_GOOGLE")
+                                    .setSimpleResponses(new WebhookResponse.FulfillmentMessage.SimpleResponses().setSimpleResponses(List.of(
+                                            new WebhookResponse.FulfillmentMessage.SimpleResponse().setTextToSpeech("Quel genre de film ?")
+                                    )))
+                    )
+            );
+        }
         else if (genre == null || genre.isEmpty()){
             webHoRes.setFullfilmentText("Quel genre de film ?");
             webHoRes.setFulfillmentMessages(List.of(
@@ -70,7 +90,7 @@ public class ChatbotController {
             for(String movie:movies.get(genre)){
                 MovieDBResponse genreSelectedResponse = restTemplate.getForObject(tmdbResourceUrl + "&query=" + movie + "&language=fr", MovieDBResponse.class);
                 WebhookResponse.FulfillmentMessage.Item item = new WebhookResponse.FulfillmentMessage.Item()
-                        .setTitle(genreSelectedResponse.getResults().get(0).getTitle() + "33")
+                        .setTitle(genreSelectedResponse.getResults().get(0).getTitle())
                         .setDescription(genreSelectedResponse.getResults().get(0).getOverview())
                         .setInfo(new WebhookResponse.FulfillmentMessage.Info().setKey(genreSelectedResponse.getResults().get(0).getId().toString()))
                         .setImage(new WebhookResponse.FulfillmentMessage.Image().setImageUri("https://image.tmdb.org/t/p/w500" + genreSelectedResponse.getResults().get(0).getPosterPath()));
