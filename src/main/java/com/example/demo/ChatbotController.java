@@ -41,7 +41,8 @@ public class ChatbotController {
                     new WebhookResponse.FulfillmentMessage()
                             .setBasicCard(new WebhookResponse.FulfillmentMessage.BasicCard()
                                     .setImageURI("https://image.tmdb.org/t/p/w500" + movieSelectedResponse.getPosterPath())
-                                    .setButtons(List.of(new WebhookResponse.FulfillmentMessage.Button().setOpenUriAction(new WebhookResponse.FulfillmentMessage.OpenUriAction().setUri("UriAction")))))
+                                    //.setButtons(List.of(new WebhookResponse.FulfillmentMessage.Button().setOpenUriAction(new WebhookResponse.FulfillmentMessage.OpenUriAction().setUri("UriAction"))))
+                            )
             ));
         }
         else if (genre == null || genre.isEmpty()){
@@ -84,7 +85,6 @@ public class ChatbotController {
                     new WebhookResponse.FulfillmentMessage()
                             .setPlatform("ACTIONS_ON_GOOGLE")
                             .setCarouselSelect(new WebhookResponse.FulfillmentMessage.CarouselSelect().setItems(items))
-                            //.setBasicCard(new WebhookResponse.FulfillmentMessage.BasicCard().setButtons(List.of(new WebhookResponse.FulfillmentMessage.Button().setOpenUriAction(new WebhookResponse.FulfillmentMessage.OpenUriAction().setUri("UriAction")))))
             ));
         }
         return webHoRes;
@@ -92,4 +92,4 @@ public class ChatbotController {
 }
 
 // boucler sur les outputcontext et vérifier si name se termine par actions intent option
-// dans le cas où c'est vrai récupérer la valeur du champ option
+// dans le cas où c'est vrai récupérer la valeur du champ option qui correspond à l'id du film choisi
