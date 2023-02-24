@@ -29,8 +29,8 @@ public class ChatbotController {
         log.info("{}", data.getQueryResult().getOutputContexts());
         String outputContext;
         Integer option = 0;
-        var genre = (String)data.getQueryResult().getParameters().get("Genre");
-        if (data.getQueryResult().getAction().equals("movieSLAction")){
+        var genre = (String)data.getQueryResult().getParameters().get("Base");
+        if (data.getQueryResult().getAction().equals("pizzaSLAction")){
             for (int i=0; i<data.getQueryResult().getOutputContexts().size(); i++){
                 if (data.getQueryResult().getOutputContexts().get(i).getName().endsWith("actions_intent_option"))
                     option = (Integer)data.getQueryResult().getOutputContexts().get(i).getParameters().get("OPTION");
@@ -46,41 +46,39 @@ public class ChatbotController {
             ));
         }
         else if (data.getQueryResult().getAction().equals("Conseil.Conseil-fallback")) {
-            webHoRes.setFullfilmentText("Je n'ai pas bien compris, quel genre ?");
+            webHoRes.setFullfilmentText("Je n'ai pas bien compris, quelle base ?");
             webHoRes.setFulfillmentMessages(List.of(
                             new WebhookResponse.FulfillmentMessage()
                                     .setPlatform("ACTIONS_ON_GOOGLE")
                                     .setSuggestions(new WebhookResponse.FulfillmentMessage.Suggestions()
                                             .setSuggestions(List.of(
-                                                    new WebhookResponse.FulfillmentMessage.Suggestion().setTitle("Action"),
-                                                    new WebhookResponse.FulfillmentMessage.Suggestion().setTitle("Aventure"),
-                                                    new WebhookResponse.FulfillmentMessage.Suggestion().setTitle("Comédie")
+                                                    new WebhookResponse.FulfillmentMessage.Suggestion().setTitle("Crème"),
+                                                    new WebhookResponse.FulfillmentMessage.Suggestion().setTitle("Tomate")
                                             ))
                                     ),
                             new WebhookResponse.FulfillmentMessage()
                                     .setPlatform("ACTIONS_ON_GOOGLE")
                                     .setSimpleResponses(new WebhookResponse.FulfillmentMessage.SimpleResponses().setSimpleResponses(List.of(
-                                            new WebhookResponse.FulfillmentMessage.SimpleResponse().setTextToSpeech("Quel genre de film ?")
+                                            new WebhookResponse.FulfillmentMessage.SimpleResponse().setTextToSpeech("Une pizza avec quelle base ?")
                                     )))
                     )
             );
         }
         else if (genre == null || genre.isEmpty()){
-            webHoRes.setFullfilmentText("Quel genre de film ?");
+            webHoRes.setFullfilmentText("Une pizza avec quelle base ?");
             webHoRes.setFulfillmentMessages(List.of(
                             new WebhookResponse.FulfillmentMessage()
                                     .setPlatform("ACTIONS_ON_GOOGLE")
                                     .setSuggestions(new WebhookResponse.FulfillmentMessage.Suggestions()
                                             .setSuggestions(List.of(
-                                                    new WebhookResponse.FulfillmentMessage.Suggestion().setTitle("Action"),
-                                                    new WebhookResponse.FulfillmentMessage.Suggestion().setTitle("Aventure"),
-                                                    new WebhookResponse.FulfillmentMessage.Suggestion().setTitle("Comédie")
+                                                    new WebhookResponse.FulfillmentMessage.Suggestion().setTitle("Crème"),
+                                                    new WebhookResponse.FulfillmentMessage.Suggestion().setTitle("Tomate")
                                             ))
                                     ),
                             new WebhookResponse.FulfillmentMessage()
                                     .setPlatform("ACTIONS_ON_GOOGLE")
                                     .setSimpleResponses(new WebhookResponse.FulfillmentMessage.SimpleResponses().setSimpleResponses(List.of(
-                                            new WebhookResponse.FulfillmentMessage.SimpleResponse().setTextToSpeech("Quel genre de film ?")
+                                            new WebhookResponse.FulfillmentMessage.SimpleResponse().setTextToSpeech("Une pizza avec quelle base ?")
                                     )))
                     )
             );
@@ -110,6 +108,3 @@ public class ChatbotController {
         return webHoRes;
     }
 }
-
-// boucler sur les outputcontext et vérifier si name se termine par actions intent option
-// dans le cas où c'est vrai récupérer la valeur du champ option qui correspond à l'id du film choisi
