@@ -19,9 +19,8 @@ public class ChatbotController {
         RestTemplate restTemplate = new RestTemplate();
         String tmdbResourceUrl = "https://api.themoviedb.org/3/search/movie?api_key=7996ca1b1e575167242fa0d3ea6f5ef1";
         Map <String, List<String>> movies = new HashMap<>();
-        movies.put("Action", List.of("Aquaman", "Uncharted"));
-        movies.put("Comédie", List.of("Ted", "Paddington"));
-        log.info("{}", movies.keySet());
+        movies.put("Crème", List.of("Loraine", "Saumon"));
+        movies.put("Tomate", List.of("Savoyarde", "Tartiflette"));
         log.info("{}", data);
         WebhookResponse webHoRes = new WebhookResponse();
         log.info("{}", webHoRes);
@@ -36,12 +35,10 @@ public class ChatbotController {
                     option = (Integer)data.getQueryResult().getOutputContexts().get(i).getParameters().get("OPTION");
             }
             log.info("{}", option);
-            Movie movieSelectedResponse = restTemplate.getForObject("https://api.themoviedb.org/3/movie/" + option +"?api_key=7996ca1b1e575167242fa0d3ea6f5ef1", Movie.class);
             webHoRes.setFulfillmentMessages(List.of(
                     new WebhookResponse.FulfillmentMessage()
                             .setBasicCard(new WebhookResponse.FulfillmentMessage.BasicCard()
-                                    .setImageURI("https://image.tmdb.org/t/p/w500" + movieSelectedResponse.getPosterPath())
-                                    //.setButtons(List.of(new WebhookResponse.FulfillmentMessage.Button().setOpenUriAction(new WebhookResponse.FulfillmentMessage.OpenUriAction().setUri("UriAction"))))
+                                    .setImageURI("https://pizz-italia.fr/wp-content/uploads/2019/09/pizz-italia-260-1080x675.jpg")
                             )
             ));
         }
@@ -88,10 +85,10 @@ public class ChatbotController {
             for(String movie:movies.get(genre)){
                 MovieDBResponse genreSelectedResponse = restTemplate.getForObject(tmdbResourceUrl + "&query=" + movie + "&language=fr", MovieDBResponse.class);
                 WebhookResponse.FulfillmentMessage.Item item = new WebhookResponse.FulfillmentMessage.Item()
-                        .setTitle(genreSelectedResponse.getResults().get(0).getTitle())
-                        .setDescription(genreSelectedResponse.getResults().get(0).getOverview())
-                        .setInfo(new WebhookResponse.FulfillmentMessage.Info().setKey(genreSelectedResponse.getResults().get(0).getId().toString()))
-                        .setImage(new WebhookResponse.FulfillmentMessage.Image().setImageUri("https://image.tmdb.org/t/p/w500" + genreSelectedResponse.getResults().get(0).getPosterPath()));
+                        .setTitle(movie);
+                        //.setDescription(genreSelectedResponse.getResults().get(0).getOverview())
+                        //.setInfo(new WebhookResponse.FulfillmentMessage.Info().setKey(genreSelectedResponse.getResults().get(0).getId().toString()))
+                        //.setImage(new WebhookResponse.FulfillmentMessage.Image().setImageUri("https://image.tmdb.org/t/p/w500" + genreSelectedResponse.getResults().get(0).getPosterPath()));
                 items.add(item);
             }
             webHoRes.setFulfillmentMessages(List.of(

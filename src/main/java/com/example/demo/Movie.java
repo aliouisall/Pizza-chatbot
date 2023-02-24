@@ -8,6 +8,7 @@ public class Movie {
     private Integer id;
     private String title;
     private String overview;
+    private String price;
     @JsonProperty("poster_path")
     private String posterPath;
 }
